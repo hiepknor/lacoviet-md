@@ -26,7 +26,7 @@
                             <div class="row">
                                 <div class="col-12 text-right">
                                     <a href="{{ route('users.create') }}"
-                                       class="btn btn-sm btn-primary">{{ __('Add user') }}</a>
+                                       class="btn btn-sm btn-primary" title="{{ __('Add user') }}"><i class="material-icons">add</i>&nbsp;{{ __('Add user') }}</a>
                                 </div>
                             </div>
                             <div class="table-responsive">

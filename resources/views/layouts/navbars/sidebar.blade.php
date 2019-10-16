@@ -34,13 +34,13 @@
                         </li>
                         <li class="nav-item{{ $activePage == 'products' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('products.index') }}">
-                                <span class="sidebar-mini"> C </span>
+                                <span class="sidebar-mini"> P </span>
                                 <span class="sidebar-normal">{{ __('Products') }} </span>
                             </a>
                         </li>
                         <li class="nav-item{{ $activePage == 'orders' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('orders.index') }}">
-                                <span class="sidebar-mini"> C </span>
+                                <span class="sidebar-mini"> O </span>
                                 <span class="sidebar-normal">{{ __('Orders') }} </span>
                             </a>
                         </li>

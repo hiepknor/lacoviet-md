@@ -25,7 +25,7 @@
                             @endif
                             <div class="row">
                                 <div class="col-12 text-right">
-                                    <a href="{{ route('categories.create') }}"
+                                    <a href="{{ route('backend.categories.create') }}"
                                        class="btn btn-sm btn-primary" title="{{ __('Add category') }}"><i
                                             class="material-icons">add</i>&nbsp;{{ __('Add category') }}</a>
                                 </div>
@@ -43,7 +43,7 @@
                                         {{ __('Parent') }}
                                     </th>
                                     <th>
-                                        {{ __('Url') }}
+                                        {{ __('Slug') }}
                                     </th>
                                     <th>
                                         {{ __('Status') }}
@@ -65,7 +65,7 @@
                                                 {{ $category->parent_id }}
                                             </td>
                                             <td>
-                                                {{ $category->url }}
+                                                {{ $category->slug }}
                                             </td>
                                             <td>
                                                 {{ $category->status }}

@@ -12,7 +12,7 @@
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('dashboard') }}">
+                <a class="nav-link" href="{{ route('backend.dashboard') }}">
                     <i class="material-icons">dashboard</i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
@@ -27,19 +27,19 @@
                 <div class="collapse{{ ($activePage == 'categories' || $activePage == 'products' || $activePage == 'orders') ? ' show' : '' }}" id="sales">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'categories' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('categories.index') }}">
+                            <a class="nav-link" href="{{ route('backend.categories.index') }}">
                                 <span class="sidebar-mini"> C </span>
                                 <span class="sidebar-normal">{{ __('Categories') }} </span>
                             </a>
                         </li>
                         <li class="nav-item{{ $activePage == 'products' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('products.index') }}">
+                            <a class="nav-link" href="{{ route('backend.products.index') }}">
                                 <span class="sidebar-mini"> P </span>
                                 <span class="sidebar-normal">{{ __('Products') }} </span>
                             </a>
                         </li>
                         <li class="nav-item{{ $activePage == 'orders' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('orders.index') }}">
+                            <a class="nav-link" href="{{ route('backend.orders.index') }}">
                                 <span class="sidebar-mini"> O </span>
                                 <span class="sidebar-normal">{{ __('Orders') }} </span>
                             </a>
@@ -57,13 +57,13 @@
                 <div class="collapse{{ ($activePage == 'profile' || $activePage == 'users') ? ' show' : '' }}" id="userManagement">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('profile.edit') }}">
+                            <a class="nav-link" href="{{ route('backend.profile.edit') }}">
                                 <span class="sidebar-mini"> UP </span>
                                 <span class="sidebar-normal">{{ __('User profile') }} </span>
                             </a>
                         </li>
                         <li class="nav-item{{ $activePage == 'users' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('users.index') }}">
+                            <a class="nav-link" href="{{ route('backend.users.index') }}">
                                 <span class="sidebar-mini"> U </span>
                                 <span class="sidebar-normal"> {{ __('Users') }} </span>
                             </a>

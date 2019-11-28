@@ -25,7 +25,7 @@
                             @endif
                             <div class="row">
                                 <div class="col-12 text-right">
-                                    <a href="{{ route('users.create') }}"
+                                    <a href="{{ route('backend.users.create') }}"
                                        class="btn btn-sm btn-primary" title="{{ __('Add user') }}"><i class="material-icons">add</i>&nbsp;{{ __('Add user') }}</a>
                                 </div>
                             </div>
@@ -59,12 +59,12 @@
                                             </td>
                                             <td class="td-actions text-right">
                                                 @if ($user->id != auth()->id())
-                                                    <form action="{{ route('users.destroy', $user) }}" method="post">
+                                                    <form action="{{ route('backend.users.destroy', $user) }}" method="post">
                                                         @csrf
                                                         @method('delete')
 
                                                         <a rel="tooltip" class="btn btn-success btn-link"
-                                                           href="{{ route('users.edit', $user) }}"
+                                                           href="{{ route('backend.users.edit', $user) }}"
                                                            data-original-title="" title="">
                                                             <i class="material-icons">edit</i>
                                                             <div class="ripple-container"></div>
@@ -78,7 +78,7 @@
                                                     </form>
                                                 @else
                                                     <a rel="tooltip" class="btn btn-success btn-link"
-                                                       href="{{ route('profile.edit') }}" data-original-title=""
+                                                       href="{{ route('backend.profile.edit') }}" data-original-title=""
                                                        title="">
                                                         <i class="material-icons">edit</i>
                                                         <div class="ripple-container"></div>

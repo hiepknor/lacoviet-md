@@ -11,15 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group([
+    'namespace' => 'Frontend',
+    'as' => 'frontend.'
+], function () {
+    Route::get('/', 'HomeController@index')->name('home');
 });
+
 Auth::routes();
 
 Route::group([
     'middleware' => 'auth',
     'prefix' => 'admin',
-    'namespace' => 'Backend'
+    'namespace' => 'Backend',
+    'as' => 'backend.'
 ], function () {
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
@@ -28,10 +33,9 @@ Route::group([
     Route::resource('products', 'ProductController', ['except' => ['show']]);
 
     Route::resource('orders', 'OrderController', ['except' => ['show']]);
-});
 
-Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', 'UserController', ['except' => ['show']]);
+
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);

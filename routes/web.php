@@ -16,7 +16,14 @@ Route::get('/', function () {
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+Route::group([
+    'middleware' => 'auth',
+    'prefix' => 'admin',
+    'namespace' => 'Backend'], function () {
+        Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+});
+
+
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('categories', 'CategoryController', ['except' => ['show']]);

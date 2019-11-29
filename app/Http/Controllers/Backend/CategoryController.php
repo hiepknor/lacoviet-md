@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
@@ -25,7 +26,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        $category = Category::all();
+        return view('categories.create', ['categories' => $category]);
     }
 
     /**
@@ -37,14 +39,34 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'parent_id' => $request->input('parent_id'),
-            'name' => $request->input('name'),
-            'slug' => $request->input('slug'),
-            'description' => $request->input('description'),
-            'status' => $request->input('status')
+            'parent_id' => $request->parent_id,
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'status' => $request->status
         ];
 
-        die(var_dump($data));
+        $this->validate($request, [
+            'name' => 'required',
+            'slug' => 'required|unique:categories,slug',
+            'description' => 'required',
+            'status' => 'required'
+        ]);
+
+        
+
+        $category = new Category($data);
+
+        // If first category, parent id is 0
+        if(is_null($request->parent_id))
+        {
+            $category->parent_id = 0;
+        }
+        $category->created_at = Carbon::now();
+        $category->save();
+
+        return redirect()->route('backend.categories.index')->withSuccess("Category successfully created");
+
     }
 
     /**

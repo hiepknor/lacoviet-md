@@ -68,7 +68,7 @@
                                                 {{ $category->slug }}
                                             </td>
                                             <td>
-                                                {{ $category->status }}
+                                                {{ $category->getStatus() }}
                                             </td>
                                             <td>
 

@@ -36,7 +36,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        die(var_dump($request));
+        $data = [
+            'parent_id' => $request->input('parent_id'),
+            'name' => $request->input('name'),
+            'slug' => $request->input('slug'),
+            'description' => $request->input('description'),
+            'status' => $request->input('status')
+        ];
+
+        die(var_dump($data));
     }
 
     /**

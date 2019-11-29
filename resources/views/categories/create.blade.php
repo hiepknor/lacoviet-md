@@ -1,65 +1,80 @@
 @extends('layouts.app', ['activePage' => 'categories', 'titlePage' => __('Category Create')])
 
 @section('content')
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">{{ __('Create new category') }}</h4>
-                        <p class="card-category"> {{ __('Where you can create new one') }}</p>
-                    </div>
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="alert alert-success">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                        <span>{{ session('status') }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                        <div class="row">
-                            <div class="col-12 text-right">
-                                <a href="{{ route('backend.categories.store') }}"
-                                    class="btn btn-sm btn-primary" title="{{ __('Save category') }}"><i
-                                        class="material-icons">save</i>&nbsp;{{ __('Save category') }}</a>
-                            </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title ">{{ __('Create new category') }}</h4>
+                            <p class="card-category"> {{ __('Where you can create new one') }}</p>
                         </div>
-                        <div class="row justify-content-center">
-                            <form action="" class="w-100">
-                                <div class="input-group mb-3 col-md-6">
-                                    <div class="input-group-prepend col-md-4">
-                                        <label class="input-group-text" for="inputGroupSelect01">Parent Category</label>
+                        <div class="card-body">
+                            <form action="{{ route('backend.categories.store') }}" class="w-100" method="post">
+                                @csrf
+                                @if (session('status'))
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="alert alert-success">
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                        aria-label="Close">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                                <span>{{ session('status') }}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <select class="browser-default custom-select" id="inputGroupSelect01">
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
+                                @endif
+                                <div class="row">
+                                    <div class="col-12 text-right">
+                                        <button type="submit"
+                                           class="btn btn-sm btn-primary" title="{{ __('Save category') }}"><i
+                                                    class="material-icons">save</i>&nbsp;{{ __('Save category') }}</button>
+                                    </div>
                                 </div>
-                                <div class="md-form input-group mb-3 col-md-6">
-                                    <div class="input-group-prepend col-md-4">
-                                        <span class="input-group-text md-addon" id="inputGroupMaterial-sizing-default">Name</span>
+                                <div class="row">
+
+                                    <div class="input-group mb-3 col-md-6">
+                                        <div class="input-group-prepend col-md-4">
+                                            <label class="input-group-text" for="inputGroupSelect01">Parent
+                                                Category</label>
+                                        </div>
+                                        <select class="browser-default custom-select" id="inputGroupSelect01"
+                                                name="parent_id">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroupMaterial-sizing-default">
-                                </div>
-                                <div class="md-form input-group mb-3 col-md-6">
-                                    <div class="input-group-prepend col-md-4">
-                                        <span class="input-group-text md-addon" id="inputGroupMaterial-sizing-default">Slug</span>
+                                    <div class="input-group mb-3 col-md-6">
+                                        <div class="input-group-prepend col-md-4">
+                                            <div class="input-group-prepend col-md-4">
+                                            <span class="input-group-text md-addon"
+                                                  id="inputGroupMaterial-sizing-default">Name</span>
+                                            </div>
+                                            <input type="text" class="form-control" aria-label="Name"
+                                                   aria-describedby="inputGroupMaterial-sizing-default" name="name">
+                                        </div>
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Slug" aria-describedby="inputGroupMaterial-sizing-default">
-                                </div>
-                                <div class="md-form input-group mb-3 col-md-6">
-                                    <div class="input-group-prepend col-md-4">
-                                        <span class="input-group-text md-addon" id="inputGroupMaterial-sizing-default">Description</span>
+                                    <div class="input-group mb-3 col-md-6">
+                                        <div class="input-group-prepend col-md-4">
+                                            <span class="input-group-text md-addon"
+                                                  id="inputGroupMaterial-sizing-default">Slug</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Slug"
+                                               aria-describedby="inputGroupMaterial-sizing-default" name="slug">
                                     </div>
-                                    <textarea type="text" class="form-control" aria-label="Slug" aria-describedby="inputGroupMaterial-sizing-default"></textarea>
+                                    <div class="input-group mb-3 col-md-6">
+                                        <div class="input-group-prepend col-md-4">
+                                            <span class="input-group-text md-addon"
+                                                  id="inputGroupMaterial-sizing-default">Description</span>
+                                        </div>
+                                        <textarea type="text" class="form-control" aria-label="Slug"
+                                                  aria-describedby="inputGroupMaterial-sizing-default"
+                                                  name="description"></textarea>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -68,16 +83,16 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @push('js')
     <script>
         (function (document, $) {
             'use strict';
-            $('input[aria-label="Name"]').keyup(function(){
+            $('input[aria-label="Name"]').keyup(function () {
                 $('input[aria-label="Slug"]').val(slugify($(this).val()));
             });
+
             function slugify(text) {
                 return text.toString().toLowerCase()
                 // Support Vietnamese.

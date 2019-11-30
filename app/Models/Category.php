@@ -15,6 +15,11 @@ class Category extends Model
         return $this->hasMany('App\Models\Products', 'category_id');
     }
 
+    // Select 'slug' as primary key
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     // Get text for status
     public function getStatus()
@@ -23,6 +28,24 @@ class Category extends Model
         {
             return 'Enabled';
         }
-        return 'Disabled';
+        else
+        {
+            return 'Disabled';
+        }
+        
+    }
+
+    // Get text for parent category by parent id
+    public function getParentCategoryName($parentId)
+    {
+        if($parentId == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            $category = Category::where('id',$parentId)->first();
+            return $category->name;
+        }
     }
 }

@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index(Category $category)
     {
-        return view('categories.index', ['categories' => $category->paginate(2)]);
+        return view('categories.index', ['categories' => $category->paginate(10)]);
     }
 
     /**
@@ -47,10 +47,7 @@ class CategoryController extends Controller
         ];
 
         $this->validate($request, [
-            'name' => 'required',
             'slug' => 'required|unique:categories,slug',
-            'description' => 'required',
-            'status' => 'required'
         ]);
 
         
@@ -86,9 +83,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $categorySlug)
     {
-        //
+        return view('categories.edit', ['category' => $categorySlug]);
+        
     }
 
     /**
@@ -100,7 +98,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'parent_id' => $request->parent_id,
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'status' => $request->status
+        ];
+
+        die(var_dump($data));
     }
 
     /**

@@ -62,7 +62,7 @@
                                                 {{ $category->name }}
                                             </td>
                                             <td>
-                                                {{ $category->parent_id }}
+                                                {{ $category->getParentCategoryName($category->parent_id) }}
                                             </td>
                                             <td>
                                                 {{ $category->slug }}
@@ -70,8 +70,9 @@
                                             <td>
                                                 {{ $category->getStatus() }}
                                             </td>
-                                            <td>
-
+                                            <td class="text-right">
+                                                <a href="{{ route('backend.categories.edit', $category->slug) }}"><i class="material-icons">edit</i></a>
+                                                <a href="#"><i class="material-icons">delete</i></a>
                                             </td>
                                         </tr>
                                     @endforeach

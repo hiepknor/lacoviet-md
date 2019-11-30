@@ -107,7 +107,7 @@
                                             <div class="input-group-prepend col-md-4">
                                                 <span class="input-group-text md-addon" id="inputGroupMaterial-sizing-default">Status</span>
                                             </div>
-                                            <label class="switch">
+                                            <label class="switch ml-4">
                                                 <input type="checkbox" name="status" value=0>
                                                 <span class="slider round"></span>
                                             </label>
@@ -116,30 +116,30 @@
                                             <div class="input-group-prepend col-md-4">
                                                 <label class="input-group-text" for="inputGroupSelect01">Parent Category</label>
                                             </div>
-                                            <select {{$categories->count() < 1 ? 'disabled' : null}} class="browser-default custom-select" id="inputGroupSelect01" name="parent_id">
+                                            <select {{$categories->count() < 1 ? 'disabled' : null}} class="browser-default custom-select ml-4" id="inputGroupSelect01" name="parent_id">
                                                 <option>Choose category...</option>
                                                 @foreach($categories as $category)
                                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="md-form input-group mb-3 col-md-6">
+                                        <div class="input-group mb-3 col-md-6">
                                             <div class="input-group-prepend col-md-4">
                                                 <span class="input-group-text md-addon" id="inputGroupMaterial-sizing-default">Name</span>
                                             </div>
-                                            <input type="text" name="name" class="form-control" aria-label="Name" aria-describedby="inputGroupMaterial-sizing-default">
+                                            <input type="text" required name="name" class="form-control ml-4" aria-label="Name" aria-describedby="inputGroupMaterial-sizing-default">
                                         </div>
-                                        <div class="md-form input-group mb-3 col-md-6">
+                                        <div class="input-group mb-3 col-md-6">
                                             <div class="input-group-prepend col-md-4">
                                                 <span class="input-group-text md-addon" id="inputGroupMaterial-sizing-default">Slug</span>
                                             </div>
-                                            <input type="text" name="slug" class="form-control" aria-label="Slug" aria-describedby="inputGroupMaterial-sizing-default">
+                                            <input type="text" required name="slug" class="form-control ml-4" aria-label="Slug" aria-describedby="inputGroupMaterial-sizing-default">
                                         </div>
-                                        <div class="md-form input-group mb-3 col-md-6">
+                                        <div class="input-group mb-3 col-md-6">
                                             <div class="input-group-prepend col-md-4">
                                                 <span class="input-group-text md-addon" id="inputGroupMaterial-sizing-default">Description</span>
                                             </div>
-                                            <textarea type="text" name="description" class="form-control" aria-label="Slug" aria-describedby="inputGroupMaterial-sizing-default"></textarea>
+                                            <textarea type="text" name="description" class="form-control ml-4" aria-label="Slug" aria-describedby="inputGroupMaterial-sizing-default"></textarea>
                                         </div>
                                     </div>
                                 </div>

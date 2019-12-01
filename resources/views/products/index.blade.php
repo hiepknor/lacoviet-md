@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title ">{{ __('Products') }}</h4>
-                            <p class="card-category"> {{ __('Here you can manage products') }}</p>
+                            <p class="card-category"> {{ __('Here you can manage products.') }}</p>
                         </div>
                         <div class="card-body">
                         </div>

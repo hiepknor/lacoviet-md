@@ -26,8 +26,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
-        return view('categories.create', ['categories' => $category]);
+        $allCategories = Category::all();
+        return view('categories.create', ['categories' => $allCategories]);
     }
 
     /**
@@ -85,7 +85,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $categorySlug)
     {
-        return view('categories.edit', ['category' => $categorySlug]);
+        $allCategories = Category::all();
+        return view('categories.edit', ['categories' => $allCategories]);
         
     }
 
@@ -96,7 +97,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $categorySlug)
     {
         $data = [
             'parent_id' => $request->parent_id,
@@ -115,8 +116,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($categorySlug)
     {
-        //
+        $category = Category::where('slug', $categorySlug)->first();
+        $category->delete();
+        return redirect()->route('backend.categories.index')->withSuccess("Category successfully deleted");
     }
 }

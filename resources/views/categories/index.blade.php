@@ -1,5 +1,13 @@
 @extends('layouts.app', ['activePage' => 'categories', 'titlePage' => __('Categories')])
 
+@push('style')
+<style>
+    .btn-action-delete{
+        color: #9c27b0;
+        cursor: pointer;
+    }
+</style>
+@endpush
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -21,6 +29,11 @@
                                             <span>{{ session('status') }}</span>
                                         </div>
                                     </div>
+                                </div>
+                            @endif
+                            @if(session('success'))
+                                <div class="alert alert-success" >
+                                    {{ session('success') }}
                                 </div>
                             @endif
                             <div class="row">
@@ -70,9 +83,13 @@
                                             <td>
                                                 {{ $category->getStatus() }}
                                             </td>
-                                            <td class="text-right">
+                                            <td class="row justify-content-end w-100 m-0">
                                                 <a href="{{ route('backend.categories.edit', $category->slug) }}"><i class="material-icons">edit</i></a>
-                                                <a href="#"><i class="material-icons">delete</i></a>
+                                                <form action="{{ route('backend.categories.destroy', $category->slug) }}" method="POST">
+                                                    {{ method_field('DELETE') }}
+                                                    {{ csrf_field() }}
+                                                    <button class="border-0 bg-transparent cursor-pointer btn-action-delete"><i class="material-icons">delete</i></button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

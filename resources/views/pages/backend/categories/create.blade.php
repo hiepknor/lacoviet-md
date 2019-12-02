@@ -76,28 +76,21 @@
                                 <p class="card-category"> {{ __('Where you can create new one') }}</p>
                             </div>
                             <div class="card-body">
-                                @if (session('status'))
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="alert alert-success">
-                                                <button type="button" class="close" data-dismiss="alert"
-                                                        aria-label="Close">
-                                                    <i class="material-icons">close</i>
-                                                </button>
-                                                <span>{{ session('status') }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                @if($errors->all())
+                                @if($errors->any())
                                     @foreach($errors->all() as $error)
                                         <div class="alert alert-danger">
-                                            {{ $error }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <span>{{ $error }}</span>
                                         </div>
                                     @endforeach
                                 @endif
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">{{ __('Status') }}</label>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <label class="col-form-label">{{ __('Status') }}</label>
+                                    </div>
                                     <div class="col-sm-7">
                                         <div class="form-group bmd-form-group">
                                             <label class="switch">
@@ -108,7 +101,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">{{ __('Parent') }}</label>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <label class="col-form-label">{{ __('Parent') }}</label>
+                                    </div>
                                     <div class="col-sm-7">
                                         <div class="form-group bmd-form-group">
                                             <select {{$categories->count() < 1 ? 'disabled' : null}} class="custom-select"
@@ -122,7 +117,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">{{ __('Name') }}</label>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <label class="col-form-label">{{ __('Name') }}</label>
+                                    </div>
                                     <div class="col-sm-7">
                                         <div class="form-group bmd-form-group">
                                             <input type="text" required name="name" class="form-control"
@@ -131,16 +128,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">{{ __('Slug') }}</label>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <label class="col-form-label">{{ __('Slug') }}</label>
+                                    </div>
                                     <div class="col-sm-7">
                                         <div class="form-group bmd-form-group">
-                                            <input type="text" required name="slug" class="form-control"
+                                            <input type="text" name="slug" class="form-control"
                                                    aria-label="Slug">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">{{ __('Description') }}</label>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <label class="col-form-label">{{ __('Description') }}</label>
+                                    </div>
                                     <div class="col-sm-7">
                                         <div class="form-group bmd-form-group">
                                             <input type="text" name="description" class="form-control">

@@ -1,12 +1,12 @@
 @extends('layouts.backend', ['activePage' => 'categories', 'titlePage' => __('Categories')])
 
 @push('style')
-<style>
-    .btn-action-delete{
-        color: #9c27b0;
-        cursor: pointer;
-    }
-</style>
+    <style>
+        .btn-action-delete {
+            color: #9c27b0;
+            cursor: pointer;
+        }
+    </style>
 @endpush
 @section('content')
     <div class="content">
@@ -19,20 +19,8 @@
                             <p class="card-category"> {{ __('Here you can manage categories') }}</p>
                         </div>
                         <div class="card-body">
-                            @if (session('status'))
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="alert alert-success">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <i class="material-icons">close</i>
-                                            </button>
-                                            <span>{{ session('status') }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
                             @if(session('success'))
-                                <div class="alert alert-success" >
+                                <div class="alert alert-success">
                                     <button type="button" class="close" data-dismiss="alert"
                                             aria-label="Close">
                                         <i class="material-icons">close</i>
@@ -44,7 +32,7 @@
                                 <div class="col-12 text-right">
                                     <a href="{{ route('backend.categories.create') }}"
                                        class="btn btn-sm btn-primary" title="{{ __('Add category') }}"><i
-                                            class="material-icons">add</i>&nbsp;{{ __('Add category') }}</a>
+                                                class="material-icons">add</i>&nbsp;{{ __('Add category') }}</a>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -88,11 +76,15 @@
                                                 {{ $category->getStatus() }}
                                             </td>
                                             <td class="row justify-content-end w-100 m-0">
-                                                <a href="{{ route('backend.categories.edit', $category->slug) }}"><i class="material-icons">edit</i></a>
-                                                <form action="{{ route('backend.categories.destroy', $category->slug) }}" method="POST">
+                                                <a href="{{ route('backend.categories.edit', $category->slug) }}"><i
+                                                            class="material-icons">edit</i></a>
+                                                <form action="{{ route('backend.categories.destroy', $category->slug) }}"
+                                                      method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
-                                                    <button class="border-0 bg-transparent cursor-pointer btn-action-delete" onclick="return confirm('Are you sure？')"><i class="material-icons">delete</i></button>
+                                                    <button class="border-0 bg-transparent cursor-pointer btn-action-delete"
+                                                            onclick="return confirm('Are you sure？')"><i
+                                                                class="material-icons">delete</i></button>
                                                 </form>
                                             </td>
                                         </tr>

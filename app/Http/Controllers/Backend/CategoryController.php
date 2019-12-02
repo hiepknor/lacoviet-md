@@ -46,19 +46,17 @@ class CategoryController extends Controller
         $data = [
             'parent_id' => $request->parent_id ?? 0,
             'name' => $request->name,
-            'slug' => to_slug($request->name),
+            'slug' => $request->slug,
             'description' => $request->description,
             'status' => $request->status ?? 0
         ];
 
-//        die(var_dump($data));
+        $this->validate($request, [
+            'slug' => 'unique:categories,slug',
+        ]);
 
-        try {
-            $category = new Category($data);
-            $category->save();
-        } catch (ModelNotFoundException $exception) {
-            return back()->withError($exception->getMessage())->withInput();
-        }
+        $category = new Category($data);
+        $category->save();
 
         return redirect()->route('backend.categories.index')->withSuccess("Category successfully created");
 

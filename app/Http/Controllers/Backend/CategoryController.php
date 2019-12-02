@@ -21,7 +21,7 @@ class CategoryController extends Controller
      */
     public function index(Category $category)
     {
-        return view('categories.index', ['categories' => $category->paginate(10)]);
+        return view('pages.backend.categories.index', ['categories' => $category->paginate(10)]);
     }
 
     /**
@@ -32,7 +32,7 @@ class CategoryController extends Controller
     public function create()
     {
         $allCategories = Category::all();
-        return view('categories.create', ['categories' => $allCategories]);
+        return view('pages.backend.categories.create', ['categories' => $allCategories]);
     }
 
     /**
@@ -84,7 +84,7 @@ class CategoryController extends Controller
     public function edit(Category $categorySlug)
     {
         $allCategories = Category::all();
-        return view('categories.edit', ['categories' => $allCategories]);
+        return view('pages.backend.categories.edit', ['categories' => $allCategories]);
         
     }
 

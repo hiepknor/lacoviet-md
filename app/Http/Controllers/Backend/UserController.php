@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index(User $user)
     {
-        return view('users.index', ['users' => $user->paginate(15)]);
+        return view('pages.backend.users.index', ['users' => $user->paginate(15)]);
     }
 
     /**
@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('pages.backend.users.create');
     }
 
     /**

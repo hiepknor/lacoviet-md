@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'orders', 'titlePage' => __('Orders')])
+@extends('layouts.backend', ['activePage' => 'products', 'titlePage' => __('Products')])
 
 @section('content')
     <div class="content">
@@ -7,8 +7,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">{{ __('Orders') }}</h4>
-                            <p class="card-category"> {{ __('Here you can manage orders') }}</p>
+                            <h4 class="card-title ">{{ __('Products') }}</h4>
+                            <p class="card-category"> {{ __('Here you can manage products.') }}</p>
                         </div>
                         <div class="card-body">
                         </div>

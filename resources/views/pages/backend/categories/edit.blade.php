@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'categories', 'titlePage' => __('Edit Category')])
+@extends('layouts.backend', ['activePage' => 'categories', 'titlePage' => __('Edit Category')])
 @push('style')
 <style>
     .switch {

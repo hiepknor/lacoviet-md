@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'categories', 'titlePage' => __('Category Create')])
+@extends('layouts.backend', ['activePage' => 'categories', 'titlePage' => __('Category Create')])
 
 @push('style')
     <style>

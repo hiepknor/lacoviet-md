@@ -12,7 +12,6 @@
 */
 
 Route::group([
-    'middleware' => ['guest'],
     'namespace' => 'Frontend',
     'as' => 'frontend.'
 ], function () {

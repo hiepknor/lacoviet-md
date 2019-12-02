@@ -76,12 +76,12 @@
                                                 {{ $category->status == 1 ? 'Enabled' : 'Disabled' }}
                                             </td>
                                             <td class="row justify-content-end w-100 m-0">
-                                                <a href="{{ route('backend.categories.edit', $category->id) }}"><i class="material-icons">edit</i></a>
+                                                <a href="{{ route('backend.categories.edit', $category->id) }}" title="{{ __('Edit') }}"><i class="material-icons">edit</i></a>
                                                 <form action="{{ route('backend.categories.destroy', $category->id) }}" method="POST">
                                                     @csrf
                                                     @method('delete')
                                                     <button class="border-0 bg-transparent cursor-pointer btn-action-delete"
-                                                            onclick="return confirm('Are you sure？')"><i
+                                                            onclick="return confirm('Are you sure？')" title="{{ __('Delete') }}"><i
                                                                 class="material-icons">delete</i></button>
                                                 </form>
                                             </td>

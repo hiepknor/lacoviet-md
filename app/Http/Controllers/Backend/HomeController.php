@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,8 +23,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Category $category)
     {
-        return view('pages.backend.dashboard');
+        $categories = $category::all();
+        return view('pages.backend.dashboard', compact('categories'));
     }
 }

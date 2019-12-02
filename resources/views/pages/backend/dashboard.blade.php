@@ -1,4 +1,4 @@
-@extends('layouts.backend', ['activePage' => 'pages.backend.dashboard', 'titlePage' => __('Dashboard')])
+@extends('layouts.backend', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
 
 @section('content')
   <div class="content">
@@ -6,19 +6,25 @@
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
+            <div class="card-header card-header-primary card-header-icon">
               <div class="card-icon">
-                <i class="material-icons">content_copy</i>
+                <i class="material-icons">layers</i>
               </div>
-              <p class="card-category">Used Space</p>
-              <h3 class="card-title">49/50
-                <small>GB</small>
-              </h3>
+              <p class="card-category">{{ __('Categories') }}</p>
+              @if($categories->count() != 0)
+                <h3 class="card-title">{{ $categories->count() }}
+                  <small>items</small>
+                </h3>
+              @else
+                <h3 class="card-title">{{ __('-') }}
+                  <small></small>
+                </h3>
+              @endif
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons text-danger">warning</i>
-                <a href="#pablo">Get More Space...</a>
+                <i class="material-icons">visibility</i>
+                <a href="{{ route('backend.categories.index') }}">View more ...</a>
               </div>
             </div>
           </div>

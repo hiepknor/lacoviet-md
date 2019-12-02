@@ -79,10 +79,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $categorySlug)
+    public function edit($id)
     {
+        // die(var_dump($id));
+        // Get all categories into select option
         $allCategories = Category::all();
-        return view('pages.backend.categories.edit', ['categories' => $allCategories]);
+
+        // Get info of editing category
+        $category = Category::findOrFail($id);
+
+        return view('pages.backend.categories.edit', ['categories' => $allCategories, 'category' => $category]);
         
     }
 
@@ -93,17 +99,27 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $categorySlug)
+    public function update($id, Request $request)
     {
         $data = [
-            'parent_id' => $request->parent_id,
+            'parent_id' => $request->parent_id ?? 0,
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => to_slug($request->name),
             'description' => $request->description,
-            'status' => $request->status
+            'status' => $request->status ?? 0
         ];
 
-        die(var_dump($data));
+        $this->validate($request,[
+            'slug' => 'unique:categories,slug,'.$id
+        ]);
+    
+
+        $category = Category::find($id);
+
+        $category->fill($data);
+        $category->save();
+
+        return redirect()->route('backend.categories.index')->withSuccess("Category successfully updated");
     }
 
     /**

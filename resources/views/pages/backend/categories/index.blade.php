@@ -85,10 +85,10 @@
                                                 {{ $category->slug }}
                                             </td>
                                             <td>
-                                                {{ $category->getStatus() }}
+                                                {{ $category->status == 1 ? 'Enabled' : 'Disabled' }}
                                             </td>
                                             <td class="row justify-content-end w-100 m-0">
-                                                <a href="{{ route('backend.categories.edit', $category->slug) }}"><i class="material-icons">edit</i></a>
+                                                <a href="{{ route('backend.categories.edit', $category->id) }}"><i class="material-icons">edit</i></a>
                                                 <form action="{{ route('backend.categories.destroy', $category->slug) }}" method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}

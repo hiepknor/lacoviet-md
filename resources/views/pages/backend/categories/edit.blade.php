@@ -72,9 +72,9 @@
                             <p class="card-category"> {{ __('Here you can edit the category') }}</p>
                         </div>
                         <div class="card-body">
-                        <form action="{{ route('backend.categories.update', $category->slug) }}" class="w-100" method="post">
-                            {{ method_field('PATCH') }}
-                            {{ csrf_field() }}
+                        <form action="{{ route('backend.categories.update', $category->id) }}" class="w-100" method="post">
+                            @csrf
+                            @method('patch')
                                 @if (session('status'))
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -120,7 +120,7 @@
                                             <select {{$categories->count() < 1 ? 'disabled' : null}} class="browser-default custom-select ml-4" id="inputGroupSelect01" name="parent_id">
                                                 <option value="0">Choose category...</option>
                                                 @foreach($categories as $cate)
-                                                    <option value="{{$cate->id}}" {{($category->parent_id == $cate->id ? 'selected' : '')}}>{{$cate->name}}</option>
+                                                    <option value="{{$cate->id}}" {{($category->parent_id == $cate->id ? 'selected' : '')}} {{ $category->id === $cate->id ? 'hidden' : null }}>{{$cate->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

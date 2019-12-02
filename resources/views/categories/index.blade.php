@@ -92,7 +92,7 @@
                                                 <form action="{{ route('backend.categories.destroy', $category->slug) }}" method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
-                                                    <button class="border-0 bg-transparent cursor-pointer btn-action-delete"><i class="material-icons">delete</i></button>
+                                                    <button class="border-0 bg-transparent cursor-pointer btn-action-delete" onclick="return confirm('Are you sure？')"><i class="material-icons">delete</i></button>
                                                 </form>
                                             </td>
                                         </tr>

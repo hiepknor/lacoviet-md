@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Category;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,7 +20,8 @@ class CategoryController extends Controller
      */
     public function index(Category $category)
     {
-        return view('pages.backend.categories.index', ['categories' => $category->paginate(10)]);
+        $categories = $category->paginate(10);
+        return view('pages.backend.categories.index', compact('categories'));
     }
 
     /**
@@ -81,7 +81,6 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        // die(var_dump($id));
         // Get all categories into select option
         $allCategories = Category::all();
 
@@ -104,7 +103,7 @@ class CategoryController extends Controller
         $data = [
             'parent_id' => $request->parent_id ?? 0,
             'name' => $request->name,
-            'slug' => to_slug($request->name),
+            'slug' => $request->slug,
             'description' => $request->description,
             'status' => $request->status ?? 0
         ];
@@ -112,10 +111,8 @@ class CategoryController extends Controller
         $this->validate($request,[
             'slug' => 'unique:categories,slug,'.$id
         ]);
-    
 
-        $category = Category::find($id);
-
+        $category = Category::findOrFail($id);
         $category->fill($data);
         $category->save();
 
@@ -128,9 +125,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($categorySlug)
+    public function destroy($id)
     {
-        $category = Category::where('slug', $categorySlug)->first();
+        $category = Category::findOrFail($id);
         $category->delete();
         return redirect()->route('backend.categories.index')->withSuccess("Category successfully deleted");
     }

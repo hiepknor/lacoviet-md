@@ -77,7 +77,7 @@
                                             </td>
                                             <td class="row justify-content-end w-100 m-0">
                                                 <a href="{{ route('backend.categories.edit', $category->id) }}"><i class="material-icons">edit</i></a>
-                                                <form action="{{ route('backend.categories.destroy', $category->slug) }}" method="POST">
+                                                <form action="{{ route('backend.categories.destroy', $category->id) }}" method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
                                                     <button class="border-0 bg-transparent cursor-pointer btn-action-delete"

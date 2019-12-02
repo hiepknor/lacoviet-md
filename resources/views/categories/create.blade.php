@@ -131,16 +131,26 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <label class="col-sm-2 col-form-label">{{ __('Slug') }}</label>
+                                    <div class="col-sm-7">
+                                        <div class="form-group bmd-form-group">
+                                            <input type="text" required name="slug" class="form-control"
+                                                   aria-label="Slug">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <label class="col-sm-2 col-form-label">{{ __('Description') }}</label>
                                     <div class="col-sm-7">
                                         <div class="form-group bmd-form-group">
-                                            <input type="text" required name="description" class="form-control">
+                                            <input type="text" name="description" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer ml-auto mr-auto">
-                                <a href="{{ route('backend.categories.index') }}" class="btn btn-danger">{{ __('Cancel') }}</a>
+                                <a href="{{ route('backend.categories.index') }}"
+                                   class="btn btn-danger">{{ __('Cancel') }}</a>
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </div>

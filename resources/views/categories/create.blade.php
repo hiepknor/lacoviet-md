@@ -101,7 +101,7 @@
                                     <div class="col-sm-7">
                                         <div class="form-group bmd-form-group">
                                             <label class="switch">
-                                                <input type="checkbox" name="status" value="0">
+                                                <input type="checkbox" name="status">
                                                 <span class="slider round"></span>
                                             </label>
                                         </div>
@@ -127,15 +127,6 @@
                                         <div class="form-group bmd-form-group">
                                             <input type="text" required name="name" class="form-control"
                                                    aria-label="Name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-2 col-form-label">{{ __('Slug') }}</label>
-                                    <div class="col-sm-7">
-                                        <div class="form-group bmd-form-group">
-                                            <input type="text" required name="slug" class="form-control"
-                                                   aria-label="Slug">
                                         </div>
                                     </div>
                                 </div>

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
@@ -39,28 +39,21 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'parent_id' => $request->parent_id,
+            'parent_id' => $request->parent_id ?? 0,
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => to_slug($request->name),
             'description' => $request->description,
-            'status' => $request->status
+            'status' => $request->status ?? 0
         ];
 
-        $this->validate($request, [
-            'slug' => 'required|unique:categories,slug',
-        ]);
+//        die(var_dump($data));
 
-        
-
-        $category = new Category($data);
-
-        // If first category, parent id is 0
-        if(is_null($request->parent_id))
-        {
-            $category->parent_id = 0;
+        try {
+            $category = new Category($data);
+            $category->save();
+        } catch (ModelNotFoundException $exception) {
+            return back()->withError($exception->getMessage())->withInput();
         }
-        $category->created_at = Carbon::now();
-        $category->save();
 
         return redirect()->route('backend.categories.index')->withSuccess("Category successfully created");
 

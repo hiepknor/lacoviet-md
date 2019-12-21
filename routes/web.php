@@ -30,6 +30,7 @@ Route::group([
 
     Route::resource('categories', 'CategoryController', ['except' => ['show']]);
 
+    Route::post('products/uploadImg', ['as' => 'products.uploadImg', 'uses' => 'ProductController@uploadImg']);
     Route::resource('products', 'ProductController', ['except' => ['show']]);
 
     Route::resource('orders', 'OrderController', ['except' => ['show']]);

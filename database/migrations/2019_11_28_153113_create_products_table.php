@@ -18,10 +18,9 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->integer('category_id');
             $table->integer('unit_price');
-            $table->integer('promotion_price');
+            $table->integer('promotion_price')->default(0);
             $table->string('slug')->unique();
             $table->longText('description');
-            $table->json('images');
             $table->tinyInteger('status');
             $table->timestamps();
         });

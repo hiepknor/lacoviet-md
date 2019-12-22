@@ -30,7 +30,6 @@ Route::group([
 
     Route::resource('categories', 'CategoryController', ['except' => ['show']]);
 
-    Route::post('products/uploadImg', ['as' => 'products.uploadImg', 'uses' => 'ProductController@uploadImg']);
     Route::resource('products', 'ProductController', ['except' => ['show']]);
 
     Route::resource('orders', 'OrderController', ['except' => ['show']]);
@@ -40,5 +39,7 @@ Route::group([
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+
+    Route::post('product-images/upload', ['as' => 'productImages.upload', 'uses' => 'ProductImageController@upload']);
 });
 

@@ -183,7 +183,7 @@
                                         </div>
                                         <div class="d-flex justify-content-start mb-2 mt-2">
                                             <input type="button" value="Change" class="border-0 pl-3 pr-3 standard-update-file mr-2">
-                                            <input type="file" class="standard-choose-file"
+                                            <input type="file" class="standard-choose-file" name="file"
                                                    style="opacity: initial; position: initial">
                                         </div>
                                     </div>
@@ -228,7 +228,7 @@
                 url: '{{ route('backend.products.store') }}',
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': '{!! csrf_token() !!}'
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: product,
                 success: function (res) {
@@ -248,15 +248,31 @@
             let standardUpdateFile = $('input.standard-update-file');
             let standardChooseFile = $('input.standard-choose-file');
             standardUpdateFile.hide();
+
             standardChooseFile.on('change', function (event) {
-                let file = event.target.files[0];
+                event.preventDefault();
+                let file = this.files[0];
 
                 // Check if has file do show update button
                 if (file) {
                     standardUpdateFile.show();
                 }
-                console.log(file)
+
+                uploadStandardImage(file)
             });
+        };
+
+        let uploadStandardImage = (file) => {
+            $.ajax({
+                url: '{{ route('backend.productImages.upload') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: file,
+                contentType: false,
+                processData: false,
+            })
         };
 
         $(document).ready(function () {

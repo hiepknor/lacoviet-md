@@ -70,6 +70,8 @@
 <script src="{{ asset('material/js/material-dashboard.js') }}" type="text/javascript"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{ asset('material/demo/demo.js') }}"></script>
+<!-- Slugify -->
+<script src="{{ asset('material/js/slugify.js') }}"></script>
 <!-- Dropzone -->
 <script src="{{ asset('material/js/plugins/dropzone.js') }}"></script>
 @stack('js')

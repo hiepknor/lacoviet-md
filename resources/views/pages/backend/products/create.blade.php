@@ -207,33 +207,13 @@
     <script>
         Dropzone.autoDiscover = false;
 
-        (function (document, $) {
-
-            // Slug field
-            'use strict';
+        let workingSlug = () => {
             $('input[aria-label="Name"]').keyup(function () {
                 $('input[aria-label="Slug"]').val(slugify($(this).val()));
             });
+        };
 
-            function slugify(text) {
-                return text.toString().toLowerCase()
-                    // Support Vietnamese.
-                    .replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a') // To 'a'.
-                    .replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e') // To 'e'.
-                    .replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i') // To 'i'.
-                    .replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o') // To 'o'.
-                    .replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u') // To 'u'
-                    .replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y') // To 'y'.
-                    .replace(/đ/gi, 'd') // To 'd'.
-                    // https://gist.github.com/mathewbyrne/1280286
-                    .replace(/\s+/g, '-')           // Replace spaces with -
-                    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-                    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-                    .replace(/^-+/, '')             // Trim - from start of text
-                    .replace(/-+$/, '');            // Trim - from end of text
-            }
-
-            // Status field
+        let workingStatus = () => {
             $('input[type="checkbox"]').on('change', function () {
                 if ($(this).is(':checked')) {
                     $(this).attr('value', 1);
@@ -241,6 +221,47 @@
                     $(this).attr('value', 0);
                 }
             });
+        };
+
+        let productStore = (product) => {
+            $.ajax({
+                url: '{{ route('backend.products.store') }}',
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{!! csrf_token() !!}'
+                },
+                data: product,
+                success: function (res) {
+                    let productId = res.id;
+                    console.log(productId)
+                }
+            });
+        };
+
+        let workingDropzone = () => {
+            $('#upload-widget').dropzone({
+                url: '/'
+            })
+        };
+
+        let showChangeImageButton = () => {
+            let standardUpdateFile = $('input.standard-update-file');
+            let standardChooseFile = $('input.standard-choose-file');
+            standardUpdateFile.hide();
+            standardChooseFile.on('change', function (event) {
+                let file = event.target.files[0];
+
+                // Check if has file do show update button
+                if (file) {
+                    standardUpdateFile.show();
+                }
+                console.log(file)
+            });
+        };
+
+        $(document).ready(function () {
+            workingSlug();
+            workingStatus();
 
             // Store product to model
             let product = {
@@ -268,36 +289,12 @@
                 product.unit_price = $('input[name="unit_price"]').val();
                 product.description = $('input[name="description"]').val();
 
-                $.ajax({
-                    url: '{{ route('backend.products.store') }}',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{!! csrf_token() !!}'
-                    },
-                    data: product,
-                    success: function (res) {
-                        let productId = res.id;
-                        console.log(productId)
-                    }
-                });
+                productStore(product);
+
+                showChangeImageButton();
+
+                workingDropzone();
             });
-
-            let standardUpdateFile = $('input.standard-update-file');
-            standardUpdateFile.hide();
-            let standardChooseFile = $('input.standard-choose-file');
-            standardChooseFile.on('change', function (event) {
-                let file = event.target.files[0];
-
-                // Check if has file do show update button
-                if (file) {
-                    standardUpdateFile.show();
-                }
-                console.log(file)
-            });
-
-            $('#upload-widget').dropzone({
-                url: '/'
-            })
-        })(document, jQuery);
+        })
     </script>
 @endpush

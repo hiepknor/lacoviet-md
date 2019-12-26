@@ -40,6 +40,6 @@ Route::group([
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 
-    Route::post('product-images/upload', ['as' => 'productImages.upload', 'uses' => 'ProductImageController@upload']);
+    Route::post('images', ['as' => 'images.store', 'uses' => 'ImageController@store']);
 });
 

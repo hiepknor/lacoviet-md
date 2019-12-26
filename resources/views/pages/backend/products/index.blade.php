@@ -1,5 +1,14 @@
 @extends('layouts.backend', ['activePage' => 'products', 'titlePage' => __('Products')])
 
+@push('style')
+    <style>
+        .btn-action-delete {
+            color: #9c27b0;
+            cursor: pointer;
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="content">
         <div class="container-fluid">

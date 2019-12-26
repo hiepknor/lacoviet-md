@@ -5,19 +5,14 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ProductImageController extends Controller
+class ImageController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function store()
-    {
-
-    }
-
-    public function upload(Request $request)
+    public function store(Request $request)
     {
         if ($request->ajax()) {
             if ($request->hasFile('file')) {

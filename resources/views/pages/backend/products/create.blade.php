@@ -60,6 +60,24 @@
         .slider.round:before {
             border-radius: 50%;
         }
+
+        .standard-preview {
+            background-color: lightgray;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border: 3px solid lightgray;
+            border-radius: 5px;
+        }
+
+        .standard-preview img {
+            transition: 500ms;
+        }
+
+        .standard-preview:hover img {
+            transform: scale(1.1);
+            transition: 500ms;
+        }
     </style>
 @endpush
 
@@ -68,7 +86,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('backend.products.store') }}" class="w-100" method="post">
+                    <form action="{{ route('backend.products.store') }}" class="w-100" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card" id="productInfo">
                             <div class="card-header card-header-primary">
@@ -153,6 +171,17 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-2 d-flex align-items-center">
+                                            <label class="col-form-label">{{ __('Image') }}</label>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div class="standard-preview mb-2">
+                                                <img src="" alt="" width="200" height="200">
+                                            </div>
+                                            <input type="file" name="image" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2 d-flex align-items-center">
                                             <label class="col-form-label">{{ __('Description') }}</label>
                                         </div>
                                         <div class="col-sm-7">
@@ -166,34 +195,8 @@
                             <div class="card-footer ml-auto mr-auto">
                                 <a href="{{ route('backend.categories.index') }}"
                                    class="btn btn-danger">{{ __('Cancel') }}</a>
-                                <button type="button"
-                                        class="btn btn-primary btn-product-next">{{ __('Next step') }}</button>
-                            </div>
-                        </div>
-                        <div class="card" id="productImg">
-                            <div class="card-header card-header-primary">
-                                <h4 class="card-title ">{{ __('Upload images') }}</h4>
-                                <p class="card-category"> {{ __('Where you can upload images to product') }}</p>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-12 standard-upload">
-                                        <div class="standard-image-wrap" style="background-color: lightgray; width: 200px; height: 200px">
-
-                                        </div>
-                                        <div class="d-flex justify-content-start mb-2 mt-2">
-                                            <input type="button" value="Change" class="border-0 pl-3 pr-3 standard-update-file mr-2">
-                                            <input type="file" class="standard-choose-file" name="file"
-                                                   style="opacity: initial; position: initial">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div id="upload-widget" class="dropzone"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer ml-auto mr-auto">
-                                <button type="button" class="btn btn-primary" onclick='window.location="{{ route('backend.products.index') }}"'>Done</button>
+                                <button type="submit"
+                                        class="btn btn-primary">{{ __('Save') }}</button>
                             </div>
                         </div>
                     </form>
@@ -223,94 +226,36 @@
             });
         };
 
-        let productStore = (product) => {
-            $.ajax({
-                url: '{{ route('backend.products.store') }}',
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: product,
-                success: function (res) {
-                    let productId = res.id;
-                    console.log(productId)
-                }
-            });
-        };
-
         let workingDropzone = () => {
             $('#upload-widget').dropzone({
                 url: '/'
             })
         };
 
-        let showChangeImageButton = () => {
-            let standardUpdateFile = $('input.standard-update-file');
-            let standardChooseFile = $('input.standard-choose-file');
-            standardUpdateFile.hide();
+        let readURL = (input) => {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
 
-            standardChooseFile.on('change', function (event) {
-                event.preventDefault();
-                let file = this.files[0];
+                reader.onload = (e) => {
+                    $('.standard-preview img').attr('src', e.target.result);
+                };
 
-                // Check if has file do show update button
-                if (file) {
-                    standardUpdateFile.show();
-                }
-
-                uploadStandardImage(file)
-            });
+                reader.readAsDataURL(input.files[0]);
+            }
         };
 
-        let uploadStandardImage = (file) => {
-            $.ajax({
-                url: '{{ route('backend.productImages.upload') }}',
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: file,
-                contentType: false,
-                processData: false,
+        let workingStandardPreview = () => {
+            let previewInput = $('input[name="image"]');
+            previewInput.change((event) => {
+                let input = event.target;
+                readURL(input);
             })
         };
 
         $(document).ready(function () {
             workingSlug();
             workingStatus();
-
-            // Store product to model
-            let product = {
-                name: '',
-                category_id: 0,
-                unit_price: 0,
-                slug: '',
-                description: '',
-                status: 0
-            };
-
-            let cardInfo = $('#productInfo');
-            let cardImg = $('#productImg');
-            cardInfo.show();
-            cardImg.hide();
-
-            let btnProductNext = $('.btn-product-next');
-            btnProductNext.on('click', function () {
-                cardInfo.hide();
-                cardImg.show();
-                product.status = $('input[name="status"]').val();
-                product.category_id = $('select[name="category_id"]').val();
-                product.name = $('input[name="name"]').val();
-                product.slug = $('input[name="slug"]').val();
-                product.unit_price = $('input[name="unit_price"]').val();
-                product.description = $('input[name="description"]').val();
-
-                productStore(product);
-
-                showChangeImageButton();
-
-                workingDropzone();
-            });
+            workingStandardPreview()
         })
     </script>
 @endpush

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Model\ProductImage;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use Image;
 
 class ProductController extends Controller
 {
@@ -41,48 +42,64 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        if ($request->ajax()) {
-            $data = [
-                'name' => $request->name,
-                'category_id' => $request->category_id,
-                'unit_price' => $request->unit_price,
-                'slug' => $request->slug,
-                'description' => $request->description,
-                'status' => $request->status
-            ];
+        $data = [
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'unit_price' => $request->unit_price,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'status' => $request->status
+        ];
 
-            $validator = Validator::make($request->all(), [
-                'slug' => 'unique:products,slug',
-            ]);
+        $this->validate($request, [
+            'slug' => 'unique:products,slug',
+        ]);
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'errors' => $validator
-                ]);
+        $objProduct = new Product($data);
+        $objProduct->save();
+
+        // Get latest insert id
+        $productId = $objProduct->id;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileName = time() . '.jpg';
+            $destinationPath = public_path('uploads/' . $productId);
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 666, true);
             }
 
-//            $product = new Product($data);
-//            $product->save();
+            $img = Image::make($image->path());
+            $img->resize(200, 200, function ($constraint) {
+                $constraint->aspectRatio();
+            });
 
-            // Get latest insert id
-//            $productId = $product->id;
+            if ($img->save($destinationPath . '/' . $fileName)) {
 
-            return response()->json([
-                "id" => 1,
-                "status" => "Category successfully created"
-            ]);
+                // Insert to image model
+                $objProductImage = new ProductImage([
+                    'name' => $fileName,
+                    'product_id' => $productId,
+                    'is_standard' => 1
+                ]);
+
+                $objProductImage->save();
+            }
         }
+
+        return redirect()->route('backend.products.index')->withSuccess('Category successfully created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -93,7 +110,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -104,8 +121,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -116,7 +133,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
